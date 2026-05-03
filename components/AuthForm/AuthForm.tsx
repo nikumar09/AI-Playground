@@ -2,22 +2,52 @@
 
 import { useState } from "react"
 import { Eye, EyeOff } from "lucide-react"
+import { useRouter } from "next/navigation"
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth"
+import { doc, setDoc } from "firebase/firestore"
+import { auth } from "@/lib/auth"
+import { db } from "@/lib/firestore"
+import { generateCodename } from "@/lib/generateCodename"
 import styles from "./AuthForm.module.css"
 
 interface AuthFormProps {
   mode: "login" | "signup"
 }
 
+function mapFirebaseError(code: string, isLogin: boolean): string {
+  switch (code) {
+    case "auth/email-already-in-use":
+      return "An account with this email already exists."
+    case "auth/weak-password":
+      return "Password is too weak. Please choose a stronger one."
+    case "auth/invalid-email":
+      return "Please enter a valid email address."
+    case "auth/user-not-found":
+    case "auth/wrong-password":
+    case "auth/invalid-credential":
+      return isLogin ? "Invalid email or password." : "Something went wrong. Please try again."
+    default:
+      return "Something went wrong. Please try again."
+  }
+}
+
 export default function AuthForm({ mode }: AuthFormProps) {
+  const router = useRouter()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [emailError, setEmailError] = useState("")
   const [passwordError, setPasswordError] = useState("")
+  const [formError, setFormError] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
 
   const isLogin = mode === "login"
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     let valid = true
 
@@ -35,8 +65,28 @@ export default function AuthForm({ mode }: AuthFormProps) {
       setPasswordError("")
     }
 
-    if (valid) {
-      console.log({ email, password })
+    if (!valid) return
+
+    setIsLoading(true)
+    setFormError("")
+
+    try {
+      if (isLogin) {
+        await signInWithEmailAndPassword(auth, email, password)
+      } else {
+        const credential = await createUserWithEmailAndPassword(auth, email, password)
+        const codename = generateCodename()
+        await updateProfile(credential.user, { displayName: codename })
+        await setDoc(doc(db, "users", credential.user.uid), {
+          codename,
+          uid: credential.user.uid,
+        })
+      }
+      router.push("/heists")
+    } catch (err: unknown) {
+      const code = (err as { code?: string }).code ?? ""
+      setFormError(mapFirebaseError(code, isLogin))
+      setIsLoading(false)
     }
   }
 
@@ -86,9 +136,13 @@ export default function AuthForm({ mode }: AuthFormProps) {
             {passwordError && <span className={styles.error}>{passwordError}</span>}
           </div>
 
-          <button type="submit" className="btn">
-            {isLogin ? "Login" : "Sign Up"}
+          <button type="submit" className="btn" disabled={isLoading}>
+            {isLoading
+              ? isLogin ? "Logging in…" : "Signing up…"
+              : isLogin ? "Login" : "Sign Up"}
           </button>
+
+          {formError && <span className={styles.error}>{formError}</span>}
 
           <p className={styles.switchText}>
             {isLogin ? (
