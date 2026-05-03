@@ -1,0 +1,246 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&display=swap');
+@reference "../../app/globals.css";
+
+/* ── layout ──────────────────────────────── */
+
+.splash {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 4rem 1.5rem;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.container {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 780px;
+  gap: 0;
+}
+
+/* ── background effects ──────────────────── */
+
+.glow {
+  position: absolute;
+  top: -120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(ellipse at center, #C27AFF22 0%, #FB64B610 45%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glowSecondary {
+  position: absolute;
+  bottom: -80px;
+  right: -100px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(ellipse at center, #FB64B615 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(194, 122, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(194, 122, 255, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── badge ───────────────────────────────── */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid rgba(194, 122, 255, 0.3);
+  background: rgba(194, 122, 255, 0.07);
+  color: #C27AFF;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards;
+  animation-delay: 0.1s;
+}
+
+/* ── headline ────────────────────────────── */
+
+.headline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(5rem, 16vw, 10rem);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  color: white;
+  margin: 0 0 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.7s ease forwards;
+  animation-delay: 0.25s;
+  display: flex;
+  align-items: center;
+  gap: 0.05em;
+}
+
+.clock {
+  display: inline-block;
+  color: #C27AFF;
+  position: relative;
+  top: 0.02em;
+  filter: drop-shadow(0 0 18px #C27AFF88);
+}
+
+/* ── tagline ─────────────────────────────── */
+
+.tagline {
+  font-size: clamp(1.4rem, 3.5vw, 2rem);
+  font-weight: 300;
+  color: #99A1AF;
+  line-height: 1.3;
+  margin: 0 0 1.25rem;
+  opacity: 0;
+  animation: fadeUp 0.7s ease forwards;
+  animation-delay: 0.4s;
+}
+
+.highlight {
+  font-weight: 600;
+  background: linear-gradient(90deg, #C27AFF, #FB64B6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── sub copy ────────────────────────────── */
+
+.sub {
+  font-size: 0.975rem;
+  color: #6B7280;
+  line-height: 1.7;
+  max-width: 520px;
+  margin: 0 0 2.5rem;
+  opacity: 0;
+  animation: fadeUp 0.7s ease forwards;
+  animation-delay: 0.55s;
+}
+
+.br {
+  display: none;
+}
+@media (min-width: 640px) {
+  .br { display: inline; }
+}
+
+/* ── CTA ─────────────────────────────────── */
+
+.cta {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 3.5rem;
+  opacity: 0;
+  animation: fadeUp 0.7s ease forwards;
+  animation-delay: 0.7s;
+}
+
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.8rem 2rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #C27AFF, #FB64B6);
+  color: #030712;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 0 32px rgba(194, 122, 255, 0.35);
+}
+
+.ctaBtn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 48px rgba(194, 122, 255, 0.55);
+}
+
+.loginLink {
+  font-size: 0.875rem;
+  color: #6B7280;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.loginLink:hover {
+  color: #C27AFF;
+}
+
+/* ── feature pills ───────────────────────── */
+
+.features {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  opacity: 0;
+  animation: fadeUp 0.7s ease forwards;
+  animation-delay: 0.85s;
+}
+
+.feature {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #99A1AF;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.feature:hover {
+  border-color: rgba(194, 122, 255, 0.35);
+  color: #C27AFF;
+}
+
+.feature svg {
+  flex-shrink: 0;
+}
+
+/* ── animations ──────────────────────────── */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
