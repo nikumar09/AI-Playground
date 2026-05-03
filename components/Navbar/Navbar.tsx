@@ -15,9 +15,14 @@ export default function Navbar() {
           </h1>
           <div>Tiny missions. Big office mischief.</div>
         </header>
-        <ul>
+        <ul className={styles.navActions}>
           <li>
-            <Link href="/heists/create" className="btn">Create Heist</Link>
+            <button className={styles.btnOutline}>Logout</button>
+          </li>
+          <li>
+            <Link href="/heists/create" className={styles.btnPrimary}>
+              + Create New Heist
+            </Link>
           </li>
         </ul>
       </nav>

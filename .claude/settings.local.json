@@ -1,5 +1,10 @@
 {
-  "permissions": {},
+  "permissions": {
+    "allow": [
+      "mcp__firebase__firebase_get_environment",
+      "mcp__firebase__firebase_login"
+    ]
+  },
   "hooks": {
     "PostToolUse": [
       {

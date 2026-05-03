@@ -34,3 +34,7 @@ npx vitest run tests/components/Navbar.test.tsx
 **Path alias**: `@/*` resolves to the project root (e.g., `@/components/Navbar`).
 
 **Tests** use Vitest + React Testing Library with jsdom. Test files mirror source under `/tests/components/`. Use `getByRole` and other semantic queries per RTL conventions.
+
+## Checking Documentation
+
+- **important:** When implementing any lib/framework-specific features, ALWAYS check the appropriate lib/framework documentation using the Context7 MCP server before writing any code.

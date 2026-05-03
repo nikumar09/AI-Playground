@@ -12,11 +12,18 @@ describe("Navbar", () => {
     expect(heading).toBeInTheDocument()
   })
 
-  it("renders the Create Heist link", () => {
+  it("renders the Create New Heist link", () => {
     render(<Navbar />)
 
-    const createLink = screen.getByRole("link", { name: /create heist/i })
+    const createLink = screen.getByRole("link", { name: /create new heist/i })
     expect(createLink).toBeInTheDocument()
     expect(createLink).toHaveAttribute("href", "/heists/create")
+  })
+
+  it("renders the Logout button", () => {
+    render(<Navbar />)
+
+    const logoutBtn = screen.getByRole("button", { name: /logout/i })
+    expect(logoutBtn).toBeInTheDocument()
   })
 })
