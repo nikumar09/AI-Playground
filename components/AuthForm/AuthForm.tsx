@@ -43,6 +43,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
   const [emailError, setEmailError] = useState("")
   const [passwordError, setPasswordError] = useState("")
   const [formError, setFormError] = useState("")
+  const [successMessage, setSuccessMessage] = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
   const isLogin = mode === "login"
@@ -69,10 +70,13 @@ export default function AuthForm({ mode }: AuthFormProps) {
 
     setIsLoading(true)
     setFormError("")
+    setSuccessMessage("")
 
     try {
       if (isLogin) {
         await signInWithEmailAndPassword(auth, email, password)
+        setSuccessMessage("Login successful")
+        setIsLoading(false)
       } else {
         const credential = await createUserWithEmailAndPassword(auth, email, password)
         const codename = generateCodename()
@@ -81,8 +85,8 @@ export default function AuthForm({ mode }: AuthFormProps) {
           codename,
           uid: credential.user.uid,
         })
+        router.push("/heists")
       }
-      router.push("/heists")
     } catch (err: unknown) {
       const code = (err as { code?: string }).code ?? ""
       setFormError(mapFirebaseError(code, isLogin))
@@ -143,6 +147,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
           </button>
 
           {formError && <span className={styles.error}>{formError}</span>}
+          {successMessage && <span className={styles.success}>{successMessage}</span>}
 
           <p className={styles.switchText}>
             {isLogin ? (

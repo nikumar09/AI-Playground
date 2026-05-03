@@ -39,6 +39,10 @@
   @apply text-xs text-error mt-0.5;
 }
 
+.success {
+  @apply text-xs text-green-400 mt-0.5;
+}
+
 .switchText {
   @apply text-center text-sm text-body mt-2;
 }

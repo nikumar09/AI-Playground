@@ -184,6 +184,45 @@ describe("AuthForm", () => {
     expect(createUserWithEmailAndPassword).not.toHaveBeenCalled()
   })
 
+  it("submitting valid login credentials shows 'Login successful'", async () => {
+    vi.mocked(signInWithEmailAndPassword).mockResolvedValue({} as Awaited<ReturnType<typeof signInWithEmailAndPassword>>)
+    render(<AuthForm mode="login" />)
+    fillAndSubmit(/^login$/i)
+
+    await waitFor(() => {
+      expect(screen.getByText("Login successful")).toBeInTheDocument()
+    })
+  })
+
+  it("success message is not shown before submission", () => {
+    render(<AuthForm mode="login" />)
+    expect(screen.queryByText("Login successful")).not.toBeInTheDocument()
+  })
+
+  it("invalid login credentials show an error, not a success message", async () => {
+    vi.mocked(signInWithEmailAndPassword).mockRejectedValue({
+      code: "auth/invalid-credential",
+    })
+    render(<AuthForm mode="login" />)
+    fillAndSubmit(/^login$/i)
+
+    await waitFor(() => {
+      expect(screen.getByText("Invalid email or password.")).toBeInTheDocument()
+      expect(screen.queryByText("Login successful")).not.toBeInTheDocument()
+    })
+  })
+
+  it("signup mode redirects to /heists and does not show login success message", async () => {
+    setupSuccessfulSignup()
+    render(<AuthForm mode="signup" />)
+    fillAndSubmit(/sign up/i)
+
+    await waitFor(() => {
+      expect(mockPush).toHaveBeenCalledWith("/heists")
+      expect(screen.queryByText("Login successful")).not.toBeInTheDocument()
+    })
+  })
+
   it("login mode renders a link to /signup", () => {
     render(<AuthForm mode="login" />)
     const link = screen.getByRole("link", { name: /sign up/i })
