@@ -1,0 +1,27 @@
+@reference "../../app/globals.css";
+
+.avatar {
+  @apply inline-flex items-center justify-center rounded-full overflow-hidden
+         bg-lighter text-primary font-semibold select-none shrink-0;
+}
+
+.image {
+  @apply w-full h-full object-cover;
+}
+
+.initials {
+  @apply leading-none;
+}
+
+/* sizes */
+.sm {
+  @apply w-8 h-8 text-xs;
+}
+
+.md {
+  @apply w-10 h-10 text-sm;
+}
+
+.lg {
+  @apply w-14 h-14 text-lg;
+}

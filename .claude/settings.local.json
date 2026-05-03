@@ -1,0 +1,16 @@
+{
+  "permissions": {},
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq . > tool-use.json"
+          }
+        ]
+      }
+    ]
+  }
+}
