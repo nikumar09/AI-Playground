@@ -1,0 +1,46 @@
+@reference "../../app/globals.css";
+
+.card {
+  @apply bg-light rounded-xl p-6 w-full;
+}
+
+.header {
+  @apply flex items-center gap-4 mb-6;
+}
+
+.avatar {
+  @apply shrink-0 w-16 h-16 rounded-full;
+  background: var(--shimmer-gradient);
+  background-size: 300% 100%;
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+.headerLines {
+  @apply flex flex-col gap-3 flex-1;
+}
+
+.body {
+  @apply flex flex-col gap-4;
+}
+
+.line {
+  @apply h-3 w-full rounded-full;
+  background: var(--shimmer-gradient);
+  background-size: 300% 100%;
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+/* ~75% width — second header line */
+.lineMd {
+  @apply w-3/4;
+}
+
+/* ~55% width — last body line */
+.lineSm {
+  @apply w-[55%];
+}
+
+@keyframes shimmer {
+  0%   { background-position: 100% center; }
+  100% { background-position: -100% center; }
+}
